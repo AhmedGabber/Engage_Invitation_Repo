@@ -1,0 +1,1279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ahmed & Rawan — Save The Date</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Cinzel:wght@400;600;700&family=Great+Vibes&family=EB+Garamond:ital,wght@0,300;0,400;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --walnut:   #2e1208;
+  --mah:      #5a2410;
+  --amber:    #c8906a;
+  --gold:     #d4aa6e;
+  --gold2:    #e8c88a;
+  --cream:    #f7eee0;
+  --ivory:    #fdf8f2;
+  --rose:     #c9737a;
+  --blush:    #f0d0d4;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--ivory);font-family:'EB Garamond',serif;overflow-x:hidden;cursor:default;}
+
+/* ══════════════════════════════════════
+   FLOATING PETALS (global)
+══════════════════════════════════════ */
+#petals-layer{position:fixed;inset:0;pointer-events:none;z-index:5;overflow:hidden;}
+.petal{
+  position:absolute;top:-30px;
+  opacity:0;
+  animation:petalFall linear infinite;
+}
+@keyframes petalFall{
+  0%  {transform:translateY(0) rotate(0deg) scale(1);   opacity:0;}
+  5%  {opacity:.7;}
+  85% {opacity:.5;}
+  100%{transform:translateY(110vh) rotate(540deg) scale(.6); opacity:0;}
+}
+
+/* ══════════════════════════════════════
+   ENVELOPE SCREEN
+══════════════════════════════════════ */
+#env-screen{
+  position:fixed;inset:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  background:radial-gradient(ellipse 80% 80% at 50% 50%, #fdf5ec 0%, #f2e0cc 100%);
+  z-index:200;
+  transition:opacity .9s ease,transform .9s ease;
+}
+#env-screen.away{opacity:0;transform:translateY(-120vh);pointer-events:none;}
+
+/* floating hearts bg */
+.heart-float{
+  position:absolute;
+  font-size:14px;
+  opacity:0;
+  animation:heartDrift linear infinite;
+  color:var(--rose);
+  pointer-events:none;
+}
+@keyframes heartDrift{
+  0%  {transform:translateY(0) scale(1);   opacity:0;}
+  10% {opacity:.35;}
+  90% {opacity:.2;}
+  100%{transform:translateY(-110vh) scale(1.3); opacity:0;}
+}
+.thank-you-box {
+  text-align: center;
+  padding: 40px 20px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.8s ease;
+}
+
+.thank-you-box.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.thank-you-flower {
+  font-size: 55px;
+  margin-bottom: 15px;
+}
+
+.thank-you-box h2 {
+  margin: 0 0 12px;
+  color: #6b2a3a;
+  font-size: 38px;
+  font-family: 'Cormorant Garamond', serif;
+}
+
+.thank-you-box p {
+  margin: 0;
+  color: #666;
+  font-size: 18px;
+  line-height: 1.8;
+}
+.env-wrap{
+  position:relative;
+  width:min(300px,84vw);
+  cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+}
+
+/* bouquet */
+.bouquet{
+  position:absolute;
+  top:-100px;left:50%;
+  transform:translateX(-50%);
+  width:150px;
+  filter:drop-shadow(0 10px 28px rgba(46,18,8,.4));
+  animation:bouquetFloat 4s ease-in-out infinite;
+}
+@keyframes bouquetFloat{
+  0%,100%{transform:translateX(-50%) translateY(0) rotate(-1deg);}
+  50%    {transform:translateX(-50%) translateY(-12px) rotate(1deg);}
+}
+
+/* envelope body */
+.env-body{
+  width:100%;
+  aspect-ratio:5/7;
+  background:linear-gradient(155deg,#5c2510 0%,#3b1408 55%,#250e05 100%);
+  border-radius:6px 6px 14px 14px;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  gap:16px;
+  position:relative;
+  overflow:hidden;
+  box-shadow:
+    0 40px 80px rgba(46,18,8,.65),
+    0 0 0 1px rgba(212,170,110,.12),
+    inset 0 1px 0 rgba(232,200,138,.1);
+}
+/* envelope flap top */
+.env-body::after{
+  content:'';
+  position:absolute;top:0;left:0;right:0;
+  height:45%;
+  background:linear-gradient(180deg, rgba(92,40,20,.0) 0%, rgba(92,40,20,.08) 100%);
+  border-bottom:1px solid rgba(212,170,110,.08);
+  clip-path:polygon(0 0,100% 0,50% 100%);
+}
+/* grain */
+.env-body::before{
+  content:'';position:absolute;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");
+  opacity:.5;pointer-events:none;z-index:1;
+}
+
+/* wax seal */
+.seal{
+  position:relative;z-index:2;
+  width:72px;height:72px;
+  border-radius:50%;
+  background:radial-gradient(circle at 38% 35%,#e8c07e,#c8956a 50%,#9a6838);
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 6px 20px rgba(0,0,0,.45),inset 0 1px 3px rgba(255,255,255,.3),0 0 0 3px rgba(200,144,106,.25),0 0 0 6px rgba(200,144,106,.1);
+  font-family:'Cinzel',serif;
+  font-size:14px;font-weight:700;
+  color:#3b1408;
+  letter-spacing:2px;
+  animation:sealPulse 3s ease-in-out infinite;
+}
+@keyframes sealPulse{
+  0%,100%{box-shadow:0 6px 20px rgba(0,0,0,.45),inset 0 1px 3px rgba(255,255,255,.3),0 0 0 3px rgba(200,144,106,.25),0 0 0 6px rgba(200,144,106,.1);}
+  50%    {box-shadow:0 6px 20px rgba(0,0,0,.45),inset 0 1px 3px rgba(255,255,255,.3),0 0 0 4px rgba(200,144,106,.4),0 0 0 10px rgba(200,144,106,.08);}
+}
+
+/* STD text */
+.std-text{
+  position:relative;z-index:2;
+  text-align:center;
+  opacity:0;
+  animation:fadeSlideUp 1.4s ease forwards 1.2s;
+}
+.std-save{
+  font-family:'Cinzel',serif;
+  font-size:clamp(20px,6.5vw,28px);
+  font-weight:700;
+  letter-spacing:7px;
+  color:var(--cream);
+  text-transform:uppercase;
+  line-height:1;
+}
+.std-the{
+  font-family:'Great Vibes',cursive;
+  font-size:clamp(22px,7vw,30px);
+  color:var(--gold2);
+  line-height:1.1;
+  margin:1px 0;
+}
+.std-date{
+  font-family:'Cinzel',serif;
+  font-size:clamp(20px,6.5vw,28px);
+  font-weight:700;
+  letter-spacing:7px;
+  color:var(--cream);
+  text-transform:uppercase;
+  line-height:1;
+}
+
+/* decorative roses on envelope */
+.env-rose{
+  position:absolute;z-index:2;
+  opacity:.22;
+  width:70px;
+}
+.env-rose.tl{top:10px;left:8px;transform:rotate(-25deg);}
+.env-rose.br{bottom:10px;right:8px;transform:rotate(155deg);}
+
+@keyframes fadeSlideUp{
+  from{opacity:0;transform:translateY(16px);}
+  to  {opacity:1;transform:translateY(0);}
+}
+
+/* open label */
+.open-label{
+  margin-top:30px;
+  font-family:'Cinzel',serif;
+  font-size:10px;
+  letter-spacing:5px;
+  color:var(--mah);
+  text-transform:uppercase;
+  opacity:0;
+  animation:fadeSlideUp 1s ease forwards 2.6s;
+  display:flex;align-items:center;gap:12px;
+}
+.open-label::before,.open-label::after{
+  content:'';width:28px;height:1px;
+  background:linear-gradient(90deg,transparent,var(--amber));
+}
+.open-label::after{background:linear-gradient(90deg,var(--amber),transparent);}
+
+.heart-beat{
+  display:inline-block;color:var(--rose);
+  animation:heartBeat 1.2s ease-in-out infinite;
+}
+@keyframes heartBeat{
+  0%,100%{transform:scale(1);}
+  14%    {transform:scale(1.3);}
+  28%    {transform:scale(1);}
+  42%    {transform:scale(1.2);}
+  56%    {transform:scale(1);}
+}
+
+/* ══════════════════════════════════════
+   INVITE SCREEN
+══════════════════════════════════════ */
+#invite-screen{min-height:100vh;opacity:0;transition:opacity 1s ease .3s;}
+#invite-screen.visible{opacity:1;}
+
+/* ── ROMANTIC SKY SECTION ── */
+#plane-section{
+  position:relative;height:100vh;overflow:hidden;
+  background:radial-gradient(ellipse 120% 80% at 50% 110%, #6b2a3a 0%, #3d1020 30%, #1a0610 65%, #0d0308 100%);
+}
+.stars-bg{position:absolute;inset:0;}
+#plane-canvas{position:absolute;inset:0;width:100%;height:100%;}
+.horizon-glow{
+  position:absolute;bottom:0;left:0;right:0;height:45%;
+  background:linear-gradient(0deg,rgba(107,42,58,.7) 0%,rgba(107,42,58,.2) 50%,transparent 100%);
+}
+
+/* floating hearts in romantic sky */
+.sky-heart{
+  position:absolute;
+  color:rgba(201,115,122,.3);
+  animation:skyDrift linear infinite;
+  pointer-events:none;
+}
+@keyframes skyDrift{
+  0%  {transform:translateY(0) translateX(0) scale(1) rotate(0deg); opacity:0;}
+  8%  {opacity:.7;}
+  88% {opacity:.25;}
+  100%{transform:translateY(-100vh) translateX(20px) scale(.4) rotate(15deg); opacity:0;}
+}
+
+.invite-center{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  z-index:10;padding:20px;
+}
+
+/* decorative line above names */
+.name-deco-top{
+  font-family:'Great Vibes',cursive;
+  font-size:clamp(18px,5vw,26px);
+  color:#fce8d0;
+  opacity:0;
+  transform:translateY(20px);
+  transition:opacity 1s ease .2s,transform 1s ease .2s;
+  margin-bottom:8px;
+  text-shadow:0 0 20px rgba(255,180,150,.5), 0 1px 6px rgba(0,0,0,.9);
+}
+.name-deco-top.show{opacity:1;transform:translateY(0);}
+
+.couple-names{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(48px,14vw,96px);
+  font-weight:300;
+  color:#ffffff;
+  text-align:center;
+  line-height:1.05;
+  opacity:0;transform:translateY(30px);
+  transition:opacity 1.6s ease .4s,transform 1.6s ease .4s;
+  text-shadow:0 2px 30px rgba(0,0,0,.95), 0 0 60px rgba(200,100,120,.25);
+}
+.couple-names.show{opacity:1;transform:translateY(0);}
+
+.amp{
+  font-family:'Great Vibes',cursive;
+  font-size:.7em;
+  color:#ffccd4;
+  display:block;
+  margin:-4px 0;
+  text-shadow:0 0 30px rgba(255,160,180,.7), 0 2px 10px rgba(0,0,0,.95);
+  line-height:1.1;
+}
+
+.divider-ornament{
+  display:flex;align-items:center;gap:14px;
+  margin-top:22px;
+  opacity:0;transition:opacity 1.2s ease .9s;
+}
+.divider-ornament.show{opacity:1;}
+.div-line{width:60px;height:1px;background:linear-gradient(90deg,transparent,var(--gold));}
+.div-line.r{background:linear-gradient(90deg,var(--gold),transparent);}
+.div-heart{color:var(--rose);font-size:13px;}
+
+/* ── DETAILS SECTION ── */
+#details-section{
+  min-height:100vh;
+  background:var(--ivory);
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  padding:90px 24px 60px;
+  position:relative;overflow:hidden;
+}
+
+/* bg rose watermark */
+.bg-rose-wm{
+  position:absolute;
+  opacity:.04;
+  width:min(400px,80vw);
+  top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  pointer-events:none;
+}
+
+/* corners */
+.corner{position:absolute;width:70px;height:70px;opacity:.2;}
+.corner.tl{top:28px;left:28px;border-top:1px solid var(--mah);border-left:1px solid var(--mah);}
+.corner.tr{top:28px;right:28px;border-top:1px solid var(--mah);border-right:1px solid var(--mah);}
+.corner.bl{bottom:28px;left:28px;border-bottom:1px solid var(--mah);border-left:1px solid var(--mah);}
+.corner.br{bottom:28px;right:28px;border-bottom:1px solid var(--mah);border-right:1px solid var(--mah);}
+
+.details-card{
+  max-width:560px;width:100%;
+  text-align:center;
+  opacity:0;transform:translateY(40px);
+  transition:opacity 1.2s ease,transform 1.2s ease;
+}
+.details-card.show{opacity:1;transform:translateY(0);}
+
+.inv-script{
+  font-family:'Great Vibes',cursive;
+  font-size:clamp(18px,5vw,26px);
+  color:var(--amber);
+  margin-bottom:4px;
+}
+.inv-label{
+  font-family:'Cinzel',serif;
+  font-size:clamp(10px,2.8vw,13px);
+  letter-spacing:4px;
+  color:var(--mah);
+  text-transform:uppercase;
+  opacity:.7;
+}
+.event-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(30px,9vw,56px);
+  font-weight:400;
+  font-style:italic;
+  color:var(--walnut);
+  line-height:1.15;
+  margin:18px 0 24px;
+}
+.gold-rule{
+  width:90px;height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  margin:0 auto 32px;
+}
+.hearts-divider{
+  font-size:11px;color:var(--rose);
+  letter-spacing:8px;opacity:.6;
+  margin:0 auto 28px;
+}
+.date-block{margin-bottom:32px;}
+.date-num{
+  font-family:'Cinzel',serif;
+  font-size:clamp(36px,10.5vw,64px);
+  font-weight:700;color:var(--mah);
+  letter-spacing:2px;line-height:1;
+}
+.date-slash{color:var(--gold);font-weight:300;}
+.date-detail{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(17px,4.5vw,24px);
+  font-style:italic;color:var(--amber);
+  letter-spacing:1px;margin-top:8px;
+}
+
+/* location button */
+.location-wrap{margin-top:36px;}
+.location-name{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(14px,3.8vw,18px);
+  font-style:italic;color:var(--mah);
+  opacity:.75;margin-bottom:12px;
+  letter-spacing:.5px;
+}
+.loc-btn{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:14px 32px;
+  background:transparent;
+  border:1px solid var(--gold);
+  border-radius:2px;
+  color:var(--walnut);
+  font-family:'Cinzel',serif;
+  font-size:11px;letter-spacing:3px;
+  text-transform:uppercase;
+  text-decoration:none;
+  cursor:pointer;
+  position:relative;overflow:hidden;
+  transition:color .3s ease,box-shadow .3s ease,border-color .3s ease;
+}
+.loc-btn::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,var(--mah),var(--walnut));
+  transform:scaleX(0);transform-origin:left;
+  transition:transform .4s ease;z-index:0;
+}
+.loc-btn:hover::before{transform:scaleX(1);}
+.loc-btn:hover{color:var(--cream);border-color:var(--mah);box-shadow:0 8px 30px rgba(46,18,8,.2);}
+.loc-btn span{position:relative;z-index:1;}
+.loc-icon{
+  position:relative;z-index:1;
+  font-size:15px;
+  transition:transform .3s ease;
+}
+.loc-btn:hover .loc-icon{transform:scale(1.2);}
+
+/* ── RSVP SECTION ── */
+#rsvp-section{
+  background:linear-gradient(160deg,#fdf5ec 0%,#f5e4d0 100%);
+  padding:90px 24px 80px;
+  position:relative;overflow:hidden;
+}
+#rsvp-section::before{
+  content:'';position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 50% 40% at 10% 20%,rgba(201,115,122,.06) 0%,transparent 70%),
+    radial-gradient(ellipse 40% 50% at 90% 80%,rgba(90,36,16,.05) 0%,transparent 70%);
+}
+
+.rsvp-inner{
+  max-width:500px;margin:0 auto;
+  text-align:center;position:relative;z-index:1;
+  opacity:0;transform:translateY(40px);
+  transition:opacity 1.2s ease,transform 1.2s ease;
+}
+.rsvp-inner.show{opacity:1;transform:translateY(0);}
+
+.rsvp-script{
+  font-family:'Great Vibes',cursive;
+  font-size:clamp(32px,9vw,52px);
+  color:var(--rose);
+  margin-bottom:6px;
+  text-shadow:0 2px 20px rgba(201,115,122,.2);
+}
+.rsvp-sub{
+  font-family:'Cinzel',serif;
+  font-size:10px;letter-spacing:4px;
+  color:var(--mah);text-transform:uppercase;
+  opacity:.6;margin-bottom:36px;
+}
+
+/* inputs */
+.field-wrap{margin-bottom:20px;text-align:left;}
+.field-label{
+  font-family:'Cinzel',serif;
+  font-size:9px;letter-spacing:3px;
+  color:var(--mah);text-transform:uppercase;
+  opacity:.65;display:block;margin-bottom:8px;
+}
+.fancy-input{
+  width:100%;padding:14px 18px;
+  background:rgba(255,255,255,.7);
+  border:1px solid rgba(90,36,16,.15);
+  border-radius:2px;
+  font-family:'Cormorant Garamond',serif;
+  font-size:17px;color:var(--walnut);
+  outline:none;
+  transition:border-color .3s ease,box-shadow .3s ease,background .3s ease;
+  backdrop-filter:blur(4px);
+}
+.fancy-input:focus{
+  border-color:var(--gold);
+  box-shadow:0 0 0 3px rgba(212,170,110,.12),0 4px 16px rgba(46,18,8,.08);
+  background:rgba(255,255,255,.95);
+}
+textarea.fancy-input{min-height:120px;resize:vertical;line-height:1.6;}
+
+.send-btn{
+  width:100%;padding:16px;
+  background:linear-gradient(135deg,var(--mah) 0%,var(--walnut) 100%);
+  border:none;border-radius:2px;
+  color:var(--cream);
+  font-family:'Cinzel',serif;
+  font-size:11px;letter-spacing:4px;
+  text-transform:uppercase;cursor:pointer;
+  position:relative;overflow:hidden;
+  transition:box-shadow .3s ease,transform .2s ease;
+  box-shadow:0 6px 24px rgba(46,18,8,.3);
+  margin-top:8px;
+}
+.send-btn::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,.08),transparent);
+}
+.send-btn:hover{
+  box-shadow:0 10px 36px rgba(46,18,8,.4);
+  transform:translateY(-1px);
+}
+.send-btn:active{transform:translateY(0);}
+
+.send-note{
+  font-family:'EB Garamond',serif;
+  font-size:13px;font-style:italic;
+  color:var(--mah);opacity:.5;
+  margin-top:14px;
+}
+
+/* ── COUNTDOWN SECTION ── */
+#countdown-section{
+  background:linear-gradient(160deg,var(--walnut) 0%,#1e0a04 100%);
+  padding:90px 24px;position:relative;overflow:hidden;
+}
+#countdown-section::before{
+  content:'';position:absolute;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.05'/%3E%3C/svg%3E");
+  opacity:.5;
+}
+/* rose corners on countdown */
+.cd-rose{position:absolute;opacity:.08;width:160px;}
+.cd-rose.tl{top:-20px;left:-20px;transform:rotate(-15deg);}
+.cd-rose.br{bottom:-20px;right:-20px;transform:rotate(165deg);}
+
+.cd-inner{
+  position:relative;z-index:1;
+  max-width:620px;margin:0 auto;text-align:center;
+  opacity:0;transform:translateY(40px);
+  transition:opacity 1.2s ease,transform 1.2s ease;
+}
+.cd-inner.show{opacity:1;transform:translateY(0);}
+
+.cd-script{
+  font-family:'Great Vibes',cursive;
+  font-size:clamp(28px,8vw,46px);
+  color:var(--gold2);
+  margin-bottom:6px;
+  text-shadow:0 0 30px rgba(232,200,138,.3);
+}
+.cd-label{
+  font-family:'Cinzel',serif;
+  font-size:10px;letter-spacing:5px;
+  color:var(--gold);text-transform:uppercase;
+  opacity:.65;margin-bottom:48px;
+}
+.cd-grid{
+  display:flex;justify-content:center;
+  gap:clamp(10px,3vw,28px);
+  flex-wrap:wrap;
+}
+.cd-item{display:flex;flex-direction:column;align-items:center;}
+.cd-num{
+  font-family:'Cinzel',serif;
+  font-size:clamp(34px,10vw,68px);
+  font-weight:700;color:var(--cream);
+  line-height:1;
+  min-width:clamp(62px,16vw,100px);
+  text-align:center;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(212,170,110,.18);
+  border-radius:3px;
+  padding:clamp(10px,2.5vw,18px) clamp(8px,2vw,14px);
+  box-shadow:0 8px 32px rgba(0,0,0,.3),inset 0 1px 0 rgba(232,200,138,.07);
+}
+.cd-unit{
+  font-family:'Cinzel',serif;
+  font-size:8px;letter-spacing:3px;
+  color:var(--gold);text-transform:uppercase;
+  margin-top:10px;opacity:.7;
+}
+.cd-colon{
+  font-family:'Cinzel',serif;
+  font-size:clamp(26px,7.5vw,50px);
+  color:var(--gold);opacity:.4;
+  align-self:center;margin-bottom:26px;
+  animation:blink 1.4s ease-in-out infinite;
+}
+@keyframes blink{0%,100%{opacity:.4;}50%{opacity:.12;}}
+
+.cd-hearts{
+  margin-top:40px;
+  font-family:'Great Vibes',cursive;
+  font-size:clamp(18px,5vw,26px);
+  color:var(--gold);opacity:.6;
+}
+
+.cd-done{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(22px,6vw,38px);
+  font-style:italic;color:var(--gold2);
+  margin-top:16px;
+}
+
+/* footer */
+.footer{
+  padding:32px 24px;
+  background:var(--walnut);
+  text-align:center;
+}
+.footer-script{
+  font-family:'Great Vibes',cursive;
+  font-size:22px;color:var(--gold);
+  opacity:.5;
+}
+.footer-sub{
+  font-family:'Cinzel',serif;
+  font-size:8px;letter-spacing:4px;
+  color:rgba(247,238,224,.25);
+  text-transform:uppercase;margin-top:6px;
+}
+</style>
+</head>
+<body>
+
+<!-- PETALS LAYER -->
+<div id="petals-layer"></div>
+
+<!-- ════════════════════════════════════════════
+     ENVELOPE SCREEN
+════════════════════════════════════════════ -->
+<div id="env-screen">
+
+  <!-- bg hearts -->
+  <div id="env-hearts"></div>
+
+  <div class="env-wrap" id="envWrap">
+
+    <!-- BOUQUET SVG -->
+    <svg class="bouquet" viewBox="0 0 150 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- ribbon -->
+      <path d="M65 105 Q58 122 50 128 Q68 120 75 108 Q82 120 100 128 Q92 122 85 105" fill="#f4dfc8" opacity=".9"/>
+      <path d="M75 108 L75 132" stroke="#f4dfc8" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- ribbon bow knot -->
+      <circle cx="75" cy="107" r="5" fill="#e8ceb0" opacity=".9"/>
+      <!-- leaves -->
+      <ellipse cx="32" cy="82" rx="16" ry="7" fill="#567a38" transform="rotate(-30 32 82)" opacity=".85"/>
+      <ellipse cx="118" cy="80" rx="16" ry="7" fill="#4a6e30" transform="rotate(30 118 80)" opacity=".85"/>
+      <ellipse cx="52" cy="94" rx="12" ry="6" fill="#6a8a46" transform="rotate(-18 52 94)" opacity=".75"/>
+      <ellipse cx="100" cy="92" rx="12" ry="6" fill="#5a7c3c" transform="rotate(18 100 92)" opacity=".75"/>
+      <ellipse cx="38" cy="60" rx="9" ry="5" fill="#5a7c3c" transform="rotate(-40 38 60)" opacity=".6"/>
+      <ellipse cx="116" cy="58" rx="9" ry="5" fill="#4e7034" transform="rotate(40 116 58)" opacity=".6"/>
+      <!-- Rose 1 (center-left) -->
+      <g transform="translate(46,50)">
+        <ellipse cx="-9" cy="-7" rx="8" ry="6" fill="#b87060" opacity=".7" transform="rotate(-20 -9 -7)"/>
+        <ellipse cx="9" cy="-7" rx="8" ry="6" fill="#b87060" opacity=".7" transform="rotate(20 9 -7)"/>
+        <ellipse cx="12" cy="6" rx="8" ry="6" fill="#aa6458" opacity=".65" transform="rotate(35 12 6)"/>
+        <ellipse cx="-12" cy="6" rx="8" ry="6" fill="#aa6458" opacity=".65" transform="rotate(-35 -12 6)"/>
+        <ellipse cx="0" cy="14" rx="8" ry="5" fill="#a05e52" opacity=".55"/>
+        <circle cx="0" cy="0" r="15" fill="#c88a70" opacity=".9"/>
+        <circle cx="0" cy="0" r="10" fill="#d89a7e"/>
+        <circle cx="0" cy="0" r="6" fill="#eaae94"/>
+        <circle cx="0" cy="0" r="3" fill="#f8c8ae"/>
+      </g>
+      <!-- Rose 2 (right) -->
+      <g transform="translate(90,44)">
+        <ellipse cx="-8" cy="-6" rx="7" ry="5" fill="#c09060" opacity=".7" transform="rotate(-20 -8 -6)"/>
+        <ellipse cx="8" cy="-6" rx="7" ry="5" fill="#c09060" opacity=".7" transform="rotate(20 8 -6)"/>
+        <ellipse cx="10" cy="5" rx="7" ry="5" fill="#b48458" opacity=".65" transform="rotate(35 10 5)"/>
+        <ellipse cx="-10" cy="5" rx="7" ry="5" fill="#b48458" opacity=".65" transform="rotate(-35 -10 5)"/>
+        <circle cx="0" cy="0" r="14" fill="#d4a87a" opacity=".9"/>
+        <circle cx="0" cy="0" r="9" fill="#e0b888"/>
+        <circle cx="0" cy="0" r="5" fill="#f0cc9e"/>
+        <circle cx="0" cy="0" r="2.5" fill="#fce0b4"/>
+      </g>
+      <!-- Rose 3 (center top) -->
+      <g transform="translate(70,32)">
+        <ellipse cx="-7" cy="-5" rx="6" ry="4" fill="#c07868" opacity=".7" transform="rotate(-25 -7 -5)"/>
+        <ellipse cx="7" cy="-5" rx="6" ry="4" fill="#c07868" opacity=".7" transform="rotate(25 7 -5)"/>
+        <ellipse cx="8" cy="5" rx="6" ry="4" fill="#b47060" opacity=".6" transform="rotate(35 8 5)"/>
+        <ellipse cx="-8" cy="5" rx="6" ry="4" fill="#b47060" opacity=".6" transform="rotate(-35 -8 5)"/>
+        <circle cx="0" cy="0" r="12" fill="#cc9480" opacity=".9"/>
+        <circle cx="0" cy="0" r="8" fill="#dca890"/>
+        <circle cx="0" cy="0" r="4.5" fill="#eec0a4"/>
+      </g>
+      <!-- small buds -->
+      <ellipse cx="24" cy="65" rx="6" ry="10" fill="#c48068" transform="rotate(-12 24 65)" opacity=".8"/>
+      <ellipse cx="128" cy="62" rx="6" ry="10" fill="#c88a70" transform="rotate(12 128 62)" opacity=".8"/>
+      <ellipse cx="54" cy="28" rx="5" ry="8" fill="#d49a80" transform="rotate(-5 54 28)" opacity=".7"/>
+      <ellipse cx="96" cy="24" rx="5" ry="8" fill="#ca8a72" transform="rotate(5 96 24)" opacity=".7"/>
+      <!-- tiny hearts near flowers -->
+      <text x="104" y="30" font-size="9" fill="#c9737a" opacity=".5">♥</text>
+      <text x="30" y="48" font-size="8" fill="#c9737a" opacity=".4">♥</text>
+    </svg>
+
+    <!-- ENVELOPE -->
+    <div class="env-body">
+      <!-- corner roses (inline SVG simplified) -->
+      <svg class="env-rose tl" viewBox="0 0 70 70"><circle cx="35" cy="35" r="20" fill="#c88a70"/><circle cx="35" cy="35" r="13" fill="#d89a7e"/><circle cx="35" cy="35" r="7" fill="#eaae94"/><ellipse cx="18" cy="22" rx="10" ry="7" fill="#b87060" transform="rotate(-25 18 22)"/><ellipse cx="52" cy="22" rx="10" ry="7" fill="#b87060" transform="rotate(25 52 22)"/><ellipse cx="54" cy="48" rx="10" ry="7" fill="#aa6458" transform="rotate(35 54 48)"/><ellipse cx="16" cy="48" rx="10" ry="7" fill="#aa6458" transform="rotate(-35 16 48)"/></svg>
+      <svg class="env-rose br" viewBox="0 0 70 70"><circle cx="35" cy="35" r="20" fill="#d4a87a"/><circle cx="35" cy="35" r="13" fill="#e0b888"/><circle cx="35" cy="35" r="7" fill="#f0cc9e"/><ellipse cx="18" cy="22" rx="10" ry="7" fill="#c09060" transform="rotate(-25 18 22)"/><ellipse cx="52" cy="22" rx="10" ry="7" fill="#c09060" transform="rotate(25 52 22)"/></svg>
+
+      <div class="seal">EA</div>
+      <div class="std-text">
+        <div class="std-save">SAVE</div>
+        <div class="std-the">the</div>
+        <div class="std-date">DATE</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="open-label">
+    <span class="heart-beat">♥</span>
+    OPEN THE ENVELOPE
+    <span class="heart-beat">♥</span>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     INVITE SCREEN
+════════════════════════════════════════════ -->
+<div id="invite-screen">
+
+  <!-- ── PLANE + NAMES ── -->
+  <section id="plane-section">
+    <div class="stars-bg"></div>
+    <canvas id="plane-canvas"></canvas>
+    <div class="horizon-glow"></div>
+    <div id="sky-hearts"></div>
+
+    <div class="invite-center">
+      <div class="name-deco-top" id="nameDecoTop">Together Forever</div>
+      <div class="couple-names" id="coupleNames">
+        Ahmed
+        <span class="amp">&amp;</span>
+        Rawan
+      </div>
+      <div class="divider-ornament" id="divOrn">
+        <div class="div-line"></div>
+        <span class="div-heart">♥</span>
+        <div class="div-line r"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── DETAILS ── -->
+  <section id="details-section">
+    <!-- watermark rose -->
+    <svg class="bg-rose-wm" viewBox="0 0 200 200"><circle cx="100" cy="100" r="60" fill="#5a2410"/><circle cx="100" cy="100" r="40" fill="#7a3418"/><circle cx="100" cy="100" r="22" fill="#9a4422"/><ellipse cx="50" cy="60" rx="30" ry="20" fill="#5a2410" transform="rotate(-30 50 60)"/><ellipse cx="150" cy="60" rx="30" ry="20" fill="#5a2410" transform="rotate(30 150 60)"/><ellipse cx="155" cy="140" rx="30" ry="20" fill="#4a1e0e" transform="rotate(35 155 140)"/><ellipse cx="45" cy="140" rx="30" ry="20" fill="#4a1e0e" transform="rotate(-35 45 140)"/></svg>
+
+    <div class="corner tl"></div><div class="corner tr"></div>
+    <div class="corner bl"></div><div class="corner br"></div>
+
+    <div class="details-card" id="detailsCard">
+      <p class="inv-script">You're Invited</p>
+      <p class="inv-label">To Celebrate With Us</p>
+      <h2 class="event-title">The Al-Fatiha Celebration</h2>
+      <div class="gold-rule"></div>
+      <div class="hearts-divider">♥ &nbsp; ♥ &nbsp; ♥</div>
+      <div class="date-block">
+        <div class="date-num">
+          19<span class="date-slash"> / </span>06<span class="date-slash"> / </span>2026
+        </div>
+        <div class="date-detail">Friday Evening &nbsp;·&nbsp; 9:30 PM</div>
+      </div>
+
+      <!-- LOCATION -->
+      <div class="location-wrap">
+        <p class="location-name">Gardenia Yacht, El Maadi, Cairo</p>
+        <a class="loc-btn" id="locBtn" href="#" target="_blank" rel="noopener">
+          <span class="loc-icon">📍</span>
+          <span>View Location</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── RSVP ── -->
+  <section id="rsvp-section">
+    <div class="rsvp-inner" id="rsvpInner">
+      <div class="rsvp-script">Send Your Wishes</div>
+      <p class="rsvp-sub">We'd Love To Hear From You</p>
+
+      <div class="field-wrap">
+        <label class="field-label" for="guestName">Your Name</label>
+        <input class="fancy-input" type="text" id="guestName" placeholder="Enter your name…" autocomplete="off">
+      </div>
+      <div class="field-wrap">
+        <label class="field-label" for="guestMsg">Your Message</label>
+        <textarea class="fancy-input" id="guestMsg" placeholder="Write your warm wishes here…"></textarea>
+      </div>
+
+      <button class="send-btn" id="sendBtn">
+        ♥ &nbsp; Send My Wishes &nbsp; ♥
+      </button>
+      <p class="send-note" id="sendNote">Your message will be sent directly to us 🌹</p>
+    </div>
+  </section>
+
+  <!-- ── COUNTDOWN ── -->
+  <section id="countdown-section">
+    <!-- decorative roses -->
+    <svg class="cd-rose tl" viewBox="0 0 200 200"><circle cx="100" cy="100" r="55" fill="#c88a70"/><circle cx="100" cy="100" r="36" fill="#d89a7e"/><circle cx="100" cy="100" r="20" fill="#eaae94"/><ellipse cx="48" cy="55" rx="28" ry="18" fill="#b87060" transform="rotate(-28 48 55)"/><ellipse cx="152" cy="55" rx="28" ry="18" fill="#b87060" transform="rotate(28 152 55)"/><ellipse cx="155" cy="148" rx="28" ry="18" fill="#a86050" transform="rotate(33 155 148)"/><ellipse cx="45" cy="148" rx="28" ry="18" fill="#a86050" transform="rotate(-33 45 148)"/></svg>
+    <svg class="cd-rose br" viewBox="0 0 200 200"><circle cx="100" cy="100" r="55" fill="#d4a87a"/><circle cx="100" cy="100" r="36" fill="#e0b888"/><circle cx="100" cy="100" r="20" fill="#f0cc9e"/><ellipse cx="48" cy="55" rx="28" ry="18" fill="#c09060" transform="rotate(-28 48 55)"/><ellipse cx="152" cy="55" rx="28" ry="18" fill="#c09060" transform="rotate(28 152 55)"/></svg>
+
+    <div class="cd-inner" id="cdInner">
+      <div class="cd-script">Almost Time…</div>
+      <p class="cd-label">Counting Down To The Celebration</p>
+      <div class="cd-grid" id="cdGrid">
+        <div class="cd-item"><div class="cd-num" id="cd-days">--</div><div class="cd-unit">Days</div></div>
+        <div class="cd-colon">:</div>
+        <div class="cd-item"><div class="cd-num" id="cd-hours">--</div><div class="cd-unit">Hours</div></div>
+        <div class="cd-colon">:</div>
+        <div class="cd-item"><div class="cd-num" id="cd-mins">--</div><div class="cd-unit">Minutes</div></div>
+        <div class="cd-colon">:</div>
+        <div class="cd-item"><div class="cd-num" id="cd-secs">--</div><div class="cd-unit">Seconds</div></div>
+      </div>
+      <div class="cd-done" id="cd-done" style="display:none">🌹 The celebration has begun — with love!</div>
+      <div class="cd-hearts">♥ &nbsp; Ahmed & Rawan &nbsp; ♥</div>
+    </div>
+  </section>
+
+  <div class="footer">
+    <div class="footer-script">With all our love</div>
+    <div class="footer-sub">Ahmed &amp; Rawan &nbsp;·&nbsp; 19 / 06 / 2026 &nbsp;·&nbsp; Gardenia Yacht, Cairo</div>
+  </div>
+</div>
+
+<script>
+/* ══════════════════════════════════════
+   PETALS
+══════════════════════════════════════ */
+(function(){
+  const layer = document.getElementById('petals-layer');
+  const colors = ['#e8b0b8','#f0c8c8','#d4a0a8','#ecc8b0','#f8ddd0'];
+  for(let i=0;i<18;i++){
+    const p = document.createElement('div');
+    p.className = 'petal';
+    const size = Math.random()*10+6;
+    p.style.cssText = `
+      left:${Math.random()*100}vw;
+      width:${size}px;height:${size*0.8}px;
+      border-radius:${Math.random()*50+30}% ${Math.random()*50+50}%;
+      background:${colors[Math.floor(Math.random()*colors.length)]};
+      animation-duration:${Math.random()*12+10}s;
+      animation-delay:${Math.random()*15}s;
+    `;
+    layer.appendChild(p);
+  }
+})();
+
+/* ══════════════════════════════════════
+   ENV SCREEN HEARTS
+══════════════════════════════════════ */
+(function(){
+  const c = document.getElementById('env-hearts');
+  for(let i=0;i<14;i++){
+    const h = document.createElement('div');
+    h.className = 'heart-float';
+    h.textContent = '♥';
+    h.style.cssText = `
+      left:${Math.random()*100}%;
+      bottom:${Math.random()*20}%;
+      font-size:${Math.random()*12+8}px;
+      animation-duration:${Math.random()*8+8}s;
+      animation-delay:${Math.random()*8}s;
+      position:absolute;
+    `;
+    c.appendChild(h);
+  }
+})();
+
+/* ══════════════════════════════════════
+   ENVELOPE OPEN
+══════════════════════════════════════ */
+const envScreen   = document.getElementById('env-screen');
+const invScreen   = document.getElementById('invite-screen');
+const coupleNames = document.getElementById('coupleNames');
+const nameDecoTop = document.getElementById('nameDecoTop');
+const divOrn      = document.getElementById('divOrn');
+
+document.getElementById('env-screen').addEventListener('click', function(){
+  envScreen.classList.add('away');
+  invScreen.classList.add('visible');
+  setTimeout(startPlane, 400);
+  setTimeout(addSkyHearts, 600);
+  setTimeout(()=>{
+    nameDecoTop.classList.add('show');
+    coupleNames.classList.add('show');
+    divOrn.classList.add('show');
+  }, 900);
+});
+
+/* ══════════════════════════════════════
+   SKY HEARTS
+══════════════════════════════════════ */
+function addSkyHearts(){
+  const c = document.getElementById('sky-hearts');
+  for(let i=0;i<16;i++){
+    const h = document.createElement('div');
+    h.className = 'sky-heart';
+    h.textContent = '♥';
+    h.style.cssText = `
+      left:${Math.random()*100}%;
+      top:${Math.random()*90+5}%;
+      font-size:${Math.random()*14+7}px;
+      animation-duration:${Math.random()*10+10}s;
+      animation-delay:${Math.random()*8}s;
+      position:absolute;
+    `;
+    c.appendChild(h);
+  }
+}
+
+/* ══════════════════════════════════════
+   ROMANTIC SKY ANIMATION
+══════════════════════════════════════ */
+function startPlane(){
+  const canvas = document.getElementById('plane-canvas');
+  const ctx = canvas.getContext('2d');
+  let W, H;
+
+  function resize(){
+    W = canvas.width  = canvas.offsetWidth;
+    H = canvas.height = canvas.offsetHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  let tick = 0;
+
+  // ── Stars / sparkles
+  const stars = Array.from({length:90}, ()=>({
+    x: Math.random()*1, y: Math.random(),
+    r: Math.random()*1.5+.3,
+    twinkle: Math.random()*Math.PI*2,
+    twinkleSpeed: Math.random()*.04+.01,
+    baseOp: Math.random()*.55+.15
+  }));
+
+  // ── Firefly/bokeh orbs
+  const orbs = Array.from({length:22}, ()=>({
+    x: Math.random(), y: Math.random(),
+    r: Math.random()*4+2,
+    vx: (Math.random()-.5)*.0003,
+    vy: -(Math.random()*.0004+.0001),
+    op: Math.random()*.18+.04,
+    hue: Math.random()>0.5 ? '212,170,110' : '220,140,155'
+  }));
+
+  // ── Falling rose petals
+  const petals = Array.from({length:14}, ()=>({
+    x: Math.random(),
+    y: Math.random(),
+    size: Math.random()*10+6,
+    vx: (Math.random()-.5)*.0008,
+    vy: Math.random()*.0012+.0004,
+    rot: Math.random()*Math.PI*2,
+    rotV: (Math.random()-.5)*.02,
+    op: Math.random()*.45+.15,
+    color: Math.random()>0.5 ? '#e8b0b8' : '#f0c0b0'
+  }));
+
+  // ── Floating heart particles
+  const hearts = Array.from({length:10}, ()=>({
+    x: Math.random(),
+    y: Math.random(),
+    size: Math.random()*16+8,
+    vy: -(Math.random()*.0005+.0002),
+    vx: (Math.random()-.5)*.0003,
+    op: Math.random()*.22+.06,
+    phase: Math.random()*Math.PI*2
+  }));
+
+  // ── Moon glow (subtle)
+  function drawMoon(){
+    const mx = W*.78, my = H*.14;
+    const grad = ctx.createRadialGradient(mx,my,0,mx,my,H*.18);
+    grad.addColorStop(0, 'rgba(255,240,220,.13)');
+    grad.addColorStop(.4,'rgba(255,220,200,.05)');
+    grad.addColorStop(1, 'rgba(255,200,180,0)');
+    ctx.fillStyle = grad;
+    ctx.beginPath();
+    ctx.arc(mx,my,H*.18,0,Math.PI*2);
+    ctx.fill();
+    // moon disc
+    const moonGrad = ctx.createRadialGradient(mx-4,my-4,0,mx,my,H*.045);
+    moonGrad.addColorStop(0,'rgba(255,248,235,.55)');
+    moonGrad.addColorStop(.6,'rgba(255,235,200,.35)');
+    moonGrad.addColorStop(1,'rgba(255,220,180,.1)');
+    ctx.fillStyle = moonGrad;
+    ctx.beginPath();
+    ctx.arc(mx,my,H*.045,0,Math.PI*2);
+    ctx.fill();
+  }
+
+  // ── Soft ground shimmer
+  function drawGround(){
+    const grad = ctx.createLinearGradient(0, H*.7, 0, H);
+    grad.addColorStop(0,'rgba(120,50,70,0)');
+    grad.addColorStop(.5,'rgba(120,50,70,.08)');
+    grad.addColorStop(1,'rgba(80,20,40,.25)');
+    ctx.fillStyle = grad;
+    ctx.fillRect(0,H*.7,W,H*.3);
+    // shimmer line
+    ctx.strokeStyle = `rgba(220,150,165,${.04+Math.sin(tick*.015)*.02})`;
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(0,H*.72);ctx.lineTo(W,H*.72);
+    ctx.stroke();
+  }
+
+  function drawStars(){
+    stars.forEach(s=>{
+      s.twinkle += s.twinkleSpeed;
+      const op = s.baseOp + Math.sin(s.twinkle)*.12;
+      ctx.fillStyle=`rgba(255,240,220,${Math.max(0,op)})`;
+      ctx.beginPath();
+      ctx.arc(s.x*W, s.y*H*.7, s.r,0,Math.PI*2);
+      ctx.fill();
+    });
+  }
+
+  function drawOrbs(){
+    orbs.forEach(o=>{
+      o.x += o.vx; o.y += o.vy;
+      if(o.y<-.02) o.y=1.02;
+      if(o.x<-.02) o.x=1.02;
+      if(o.x>1.02) o.x=-.02;
+      const grad = ctx.createRadialGradient(o.x*W,o.y*H,0,o.x*W,o.y*H,o.r*3);
+      grad.addColorStop(0,`rgba(${o.hue},${o.op*2})`);
+      grad.addColorStop(1,`rgba(${o.hue},0)`);
+      ctx.fillStyle=grad;
+      ctx.beginPath();
+      ctx.arc(o.x*W,o.y*H,o.r*3,0,Math.PI*2);
+      ctx.fill();
+    });
+  }
+
+  function drawPetals(){
+    petals.forEach(p=>{
+      p.x += p.vx + Math.sin(tick*.008+p.rot)*.0002;
+      p.y += p.vy;
+      p.rot += p.rotV;
+      if(p.y>1.05){p.y=-.05;p.x=Math.random();}
+      ctx.save();
+      ctx.translate(p.x*W, p.y*H);
+      ctx.rotate(p.rot);
+      ctx.globalAlpha = p.op;
+      ctx.fillStyle = p.color;
+      // petal shape
+      ctx.beginPath();
+      ctx.ellipse(0,0, p.size*.55, p.size*.35, 0, 0, Math.PI*2);
+      ctx.fill();
+      // highlight
+      ctx.fillStyle = 'rgba(255,255,255,.3)';
+      ctx.beginPath();
+      ctx.ellipse(-p.size*.1,-p.size*.06, p.size*.18, p.size*.1, -.4, 0, Math.PI*2);
+      ctx.fill();
+      ctx.globalAlpha=1;
+      ctx.restore();
+    });
+  }
+
+  function drawHearts(){
+    hearts.forEach(h=>{
+      h.x += h.vx + Math.sin(tick*.006+h.phase)*.0003;
+      h.y += h.vy;
+      if(h.y<-.05){h.y=1.05;h.x=Math.random();}
+      ctx.save();
+      ctx.globalAlpha = h.op * (.7+Math.sin(tick*.04+h.phase)*.3);
+      ctx.fillStyle = '#e88898';
+      ctx.font = `${h.size}px serif`;
+      ctx.textAlign='center';
+      ctx.fillText('♥', h.x*W, h.y*H);
+      ctx.globalAlpha=1;
+      ctx.restore();
+    });
+  }
+
+  // Subtle light rays from moon
+  function drawRays(){
+    const mx=W*.78, my=H*.14;
+    ctx.save();
+    ctx.globalAlpha=.018+Math.sin(tick*.012)*.008;
+    for(let i=0;i<6;i++){
+      const ang = (i/6)*Math.PI*2 + tick*.002;
+      const grad = ctx.createLinearGradient(mx,my,
+        mx+Math.cos(ang)*W*.6, my+Math.sin(ang)*W*.6);
+      grad.addColorStop(0,'rgba(255,230,200,.8)');
+      grad.addColorStop(1,'rgba(255,230,200,0)');
+      ctx.strokeStyle=grad;
+      ctx.lineWidth=H*.04;
+      ctx.beginPath();
+      ctx.moveTo(mx,my);
+      ctx.lineTo(mx+Math.cos(ang)*W*.7, my+Math.sin(ang)*W*.7);
+      ctx.stroke();
+    }
+    ctx.globalAlpha=1;
+    ctx.restore();
+  }
+
+  function frame(){
+    ctx.clearRect(0,0,W,H);
+    drawRays();
+    drawMoon();
+    drawStars();
+    drawOrbs();
+    drawPetals();
+    drawHearts();
+    drawGround();
+    tick++;
+    requestAnimationFrame(frame);
+  }
+  frame();
+}
+
+/* ══════════════════════════════════════
+   SCROLL OBSERVERS
+══════════════════════════════════════ */
+function observe(el, cb, thresh=.2){
+  const io = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{ if(e.isIntersecting){cb();io.disconnect();} });
+  },{threshold:thresh});
+  io.observe(el);
+}
+
+observe(document.getElementById('detailsCard'), ()=>{
+  document.getElementById('detailsCard').classList.add('show');
+});
+observe(document.getElementById('rsvpInner'), ()=>{
+  document.getElementById('rsvpInner').classList.add('show');
+});
+observe(document.getElementById('cdInner'), ()=>{
+  document.getElementById('cdInner').classList.add('show');
+  startCountdown();
+});
+
+/* ══════════════════════════════════════
+   LOCATION BUTTON
+   ── Replace '#' with your Google Maps link when ready
+══════════════════════════════════════ */
+document.getElementById('locBtn').href = 'https://www.google.com/maps/place/Silver+Nile+Social+club/@29.9789336,31.2322741,19z/data=!4m6!3m5!1s0x145847bba36914e3:0xe5ba0d3353cb8c96!8m2!3d29.9791108!4d31.2323076!16s%2Fg%2F11bz0zc2gf!18m1!1e1?entry=ttu&g_ep=EgoyMDI2MDYwMy4xIKXMDSoASAFQAw%3D%3D'; // ← ضع رابط الموقع هنا
+
+/* ══════════════════════════════════════
+   SEND TO GOOGLE SHEETS (Apps Script)
+   ══════════════════════════════════════
+   خطوات الربط (مرة واحدة بس):
+   1. افتح: script.google.com → New Project
+   2. الصق الكود التالي:
+
+   function doPost(e) {
+     var sheet = SpreadsheetApp.openById('YOUR_SHEET_ID').getSheets()[0];
+     var data  = JSON.parse(e.postData.contents);
+     sheet.appendRow([new Date(), data.name, data.message]);
+     return ContentService.createTextOutput(JSON.stringify({status:'ok'}))
+       .setMimeType(ContentService.MimeType.JSON);
+   }
+
+   3. Deploy → New Deployment → Web App
+      - Execute as: Me
+      - Who has access: Anyone
+   4. انسخ الـ URL وحطه في WEBHOOK_URL بالأسفل
+══════════════════════════════════════ */
+const WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbw1qUhv6J9ByI9aldFP5oM3RptJMKK-0PDD-76eRLnnmj-hW85-1dfKNcQHITraD0dT/exec';
+
+document.getElementById('sendBtn').addEventListener('click', async function () {
+
+  const name = document.getElementById('guestName').value.trim();
+  const msg = document.getElementById('guestMsg').value.trim();
+  const btn = this;
+  const note = document.getElementById('sendNote');
+
+  if (!name || !msg) {
+    if (!name) {
+      document.getElementById('guestName').focus();
+    } else {
+      document.getElementById('guestMsg').focus();
+    }
+
+    note.textContent = '✦ Please fill in both your name and message';
+    note.style.color = '#c9737a';
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = '✦ Sending... ✦';
+  btn.style.opacity = '.7';
+
+  try {
+
+    await fetch(WEBHOOK_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        name,
+        message: msg
+      })
+    });
+
+  } catch (err) {
+    console.log(err);
+  }
+
+  const container = document.getElementById('rsvpInner');
+
+  container.innerHTML = `
+    <div class="thank-you-box">
+      <div class="thank-you-flower">🌹</div>
+      <h2>Thank You</h2>
+      <p>Your wishes have been received with love ♥</p>
+    </div>
+  `;
+
+  const thankYou = container.querySelector('.thank-you-box');
+
+  setTimeout(() => {
+    thankYou.classList.add('show');
+  }, 50);
+
+});
+
+
+/* ══════════════════════════════════════
+   COUNTDOWN
+══════════════════════════════════════ */
+function startCountdown(){
+  const EVENT = new Date('2026-06-19T21:30:00+02:00').getTime();
+  function pad(n){return String(n).padStart(2,'0');}
+  function tick(){
+    const diff = EVENT - Date.now();
+    if(diff<=0){
+      document.getElementById('cdGrid').style.display='none';
+      document.getElementById('cd-done').style.display='block';
+      return;
+    }
+    const d=Math.floor(diff/86400000);
+    const h=Math.floor((diff%86400000)/3600000);
+    const m=Math.floor((diff%3600000)/60000);
+    const s=Math.floor((diff%60000)/1000);
+    document.getElementById('cd-days').textContent=pad(d);
+    document.getElementById('cd-hours').textContent=pad(h);
+    document.getElementById('cd-mins').textContent=pad(m);
+    document.getElementById('cd-secs').textContent=pad(s);
+  }
+  tick();
+  setInterval(tick,1000);
+}
+</script>
+</body>
+</html>
