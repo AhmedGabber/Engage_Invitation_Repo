@@ -645,6 +645,152 @@ textarea.fancy-input{min-height:120px;resize:vertical;line-height:1.6;}
   color:rgba(247,238,224,.25);
   text-transform:uppercase;margin-top:6px;
 }
+
+/* ══════════════════════════════════════
+   SCROLL INDICATOR
+══════════════════════════════════════ */
+#scroll-hint{
+  position:absolute;
+  bottom:32px;left:50%;
+  transform:translateX(-50%);
+  z-index:20;
+  display:flex;flex-direction:column;
+  align-items:center;gap:8px;
+  opacity:0;
+  transition:opacity 1s ease;
+  pointer-events:none;
+  animation:hintBreath 3s ease-in-out infinite;
+}
+#scroll-hint.show{ opacity:1; }
+@keyframes hintBreath{
+  0%,100%{ transform:translateX(-50%) translateY(0); }
+  50%    { transform:translateX(-50%) translateY(6px); }
+}
+
+.scroll-text{
+  font-family:'Cinzel',serif;
+  font-size:8px;
+  letter-spacing:5px;
+  color:rgba(247,220,200,.55);
+  text-transform:uppercase;
+}
+
+.scroll-mouse{
+  width:22px;height:34px;
+  border:1px solid rgba(212,170,110,.35);
+  border-radius:11px;
+  display:flex;justify-content:center;
+  padding-top:5px;
+}
+.scroll-wheel{
+  width:3px;height:7px;
+  background:var(--gold);
+  border-radius:2px;
+  opacity:.7;
+  animation:wheelScroll 1.6s ease-in-out infinite;
+}
+@keyframes wheelScroll{
+  0%  { transform:translateY(0); opacity:.7; }
+  60% { transform:translateY(8px); opacity:.15; }
+  100%{ transform:translateY(0); opacity:.7; }
+}
+
+.scroll-arrows{
+  display:flex;flex-direction:column;align-items:center;gap:1px;
+}
+.scroll-arr{
+  width:8px;height:8px;
+  border-right:1px solid rgba(212,170,110,.5);
+  border-bottom:1px solid rgba(212,170,110,.5);
+  transform:rotate(45deg);
+  animation:arrFade 1.6s ease-in-out infinite;
+}
+.scroll-arr:nth-child(2){ animation-delay:.2s; opacity:.6; }
+.scroll-arr:nth-child(3){ animation-delay:.4s; opacity:.3; }
+@keyframes arrFade{
+  0%,100%{ opacity:.8; } 50%{ opacity:.2; }
+}
+
+/* ══════════════════════════════════════
+   MOBILE RESPONSIVE
+══════════════════════════════════════ */
+
+/* Envelope screen — smaller screens */
+@media(max-width:480px){
+  .env-wrap{ width:min(260px,78vw); }
+  .bouquet{ width:120px; top:-85px; }
+  .seal{ width:58px; height:58px; font-size:12px; }
+  .open-label{ font-size:8px; letter-spacing:3px; gap:8px; }
+  .open-label::before,.open-label::after{ width:18px; }
+}
+
+/* Names section */
+@media(max-width:480px){
+  .couple-names{ font-size:clamp(38px,13vw,60px); }
+  .amp{ font-size:.65em; }
+  .name-deco-top{ font-size:clamp(16px,4.5vw,22px); }
+  .invite-center{ padding:16px; }
+  #scroll-hint{ bottom:20px; }
+}
+
+/* Details section */
+@media(max-width:480px){
+  #details-section{ padding:60px 18px 50px; }
+  .details-card{ max-width:100%; }
+  .event-title{ font-size:clamp(26px,8vw,40px); margin:14px 0 18px; }
+  .date-num{ font-size:clamp(28px,9vw,48px); letter-spacing:1px; }
+  .date-detail{ font-size:clamp(15px,4vw,20px); }
+  .loc-btn{ padding:12px 20px; font-size:10px; letter-spacing:2px; }
+  .corner{ width:44px; height:44px; }
+  .corner.tl,.corner.tr{ top:16px; }
+  .corner.bl,.corner.br{ bottom:16px; }
+  .corner.tl,.corner.bl{ left:16px; }
+  .corner.tr,.corner.br{ right:16px; }
+}
+
+/* RSVP section */
+@media(max-width:480px){
+  #rsvp-section{ padding:60px 16px 60px; }
+  .rsvp-inner{ max-width:100%; }
+  .rsvp-script{ font-size:clamp(28px,8vw,44px); }
+  .fancy-input{ font-size:16px; padding:12px 14px; }
+  textarea.fancy-input{ min-height:100px; }
+  .send-btn{ padding:14px; font-size:10px; letter-spacing:3px; }
+}
+
+/* Countdown section */
+@media(max-width:480px){
+  #countdown-section{ padding:60px 12px; }
+  .cd-grid{ gap:8px; }
+  .cd-num{
+    font-size:clamp(26px,8vw,48px);
+    min-width:clamp(52px,14vw,80px);
+    padding:10px 8px;
+  }
+  .cd-colon{ font-size:clamp(22px,6vw,36px); margin-bottom:20px; }
+  .cd-unit{ font-size:7px; letter-spacing:2px; }
+  .cd-script{ font-size:clamp(22px,7vw,38px); }
+  .cd-label{ font-size:9px; letter-spacing:3px; margin-bottom:32px; }
+}
+
+/* Very small screens */
+@media(max-width:360px){
+  .cd-grid{ gap:5px; }
+  .cd-num{
+    font-size:clamp(22px,7vw,36px);
+    min-width:clamp(44px,12vw,64px);
+    padding:8px 6px;
+  }
+  .cd-colon{ font-size:clamp(18px,5.5vw,28px); }
+}
+
+/* Landscape phones */
+@media(max-height:500px) and (orientation:landscape){
+  .env-wrap{ width:min(180px,40vw); }
+  .bouquet{ width:90px; top:-65px; }
+  #plane-section{ height:100vh; }
+  .couple-names{ font-size:clamp(32px,7vh,56px); }
+}
 </style>
 </head>
 <body>
@@ -725,7 +871,7 @@ textarea.fancy-input{min-height:120px;resize:vertical;line-height:1.6;}
       <svg class="env-rose tl" viewBox="0 0 70 70"><circle cx="35" cy="35" r="20" fill="#c88a70"/><circle cx="35" cy="35" r="13" fill="#d89a7e"/><circle cx="35" cy="35" r="7" fill="#eaae94"/><ellipse cx="18" cy="22" rx="10" ry="7" fill="#b87060" transform="rotate(-25 18 22)"/><ellipse cx="52" cy="22" rx="10" ry="7" fill="#b87060" transform="rotate(25 52 22)"/><ellipse cx="54" cy="48" rx="10" ry="7" fill="#aa6458" transform="rotate(35 54 48)"/><ellipse cx="16" cy="48" rx="10" ry="7" fill="#aa6458" transform="rotate(-35 16 48)"/></svg>
       <svg class="env-rose br" viewBox="0 0 70 70"><circle cx="35" cy="35" r="20" fill="#d4a87a"/><circle cx="35" cy="35" r="13" fill="#e0b888"/><circle cx="35" cy="35" r="7" fill="#f0cc9e"/><ellipse cx="18" cy="22" rx="10" ry="7" fill="#c09060" transform="rotate(-25 18 22)"/><ellipse cx="52" cy="22" rx="10" ry="7" fill="#c09060" transform="rotate(25 52 22)"/></svg>
 
-      <div class="seal">Open</div>
+      <div class="seal">EA</div>
       <div class="std-text">
         <div class="std-save">SAVE</div>
         <div class="std-the">the</div>
@@ -764,6 +910,19 @@ textarea.fancy-input{min-height:120px;resize:vertical;line-height:1.6;}
         <div class="div-line"></div>
         <span class="div-heart">♥</span>
         <div class="div-line r"></div>
+      </div>
+    </div>
+
+    <!-- SCROLL INDICATOR -->
+    <div id="scroll-hint">
+      <div class="scroll-text">Scroll</div>
+      <div class="scroll-mouse">
+        <div class="scroll-wheel"></div>
+      </div>
+      <div class="scroll-arrows">
+        <div class="scroll-arr"></div>
+        <div class="scroll-arr"></div>
+        <div class="scroll-arr"></div>
       </div>
     </div>
   </section>
@@ -914,6 +1073,10 @@ document.getElementById('env-screen').addEventListener('click', function(){
     coupleNames.classList.add('show');
     divOrn.classList.add('show');
   }, 900);
+  // show scroll hint after names fully appear
+  setTimeout(()=>{
+    document.getElementById('scroll-hint').classList.add('show');
+  }, 2600);
 });
 
 /* ══════════════════════════════════════
@@ -1143,6 +1306,13 @@ function startPlane(){
 /* ══════════════════════════════════════
    SCROLL OBSERVERS
 ══════════════════════════════════════ */
+// Hide scroll hint once user starts scrolling
+window.addEventListener('scroll', function hideHint(){
+  const hint = document.getElementById('scroll-hint');
+  if(hint){ hint.style.opacity='0'; hint.style.transition='opacity .5s ease'; }
+  window.removeEventListener('scroll', hideHint);
+}, {passive:true});
+
 function observe(el, cb, thresh=.2){
   const io = new IntersectionObserver(entries=>{
     entries.forEach(e=>{ if(e.isIntersecting){cb();io.disconnect();} });
