@@ -254,7 +254,7 @@ body{background:var(--ivory);font-family:'EB Garamond',serif;overflow-x:hidden;c
 /* ── ROMANTIC SKY SECTION ── */
 #plane-section{
   position:relative;
-  height:92vh;
+  height:100vh;
   min-height:460px;
   overflow:hidden;
   background:radial-gradient(ellipse 120% 80% at 50% 110%, #6b2a3a 0%, #3d1020 30%, #1a0610 65%, #0d0308 100%);
@@ -740,8 +740,8 @@ textarea.fancy-input{min-height:120px;resize:vertical;line-height:1.6;}
 
 /* ── Sky / Names section on mobile ── */
 @media(max-width:600px){
-  /* Show ~78% of viewport so next section peeks in */
-  #plane-section{ height:78vh; min-height:380px; }
+  /* Full screen on mobile — scroll indicator shows the way */
+  #plane-section{ height:100vh; min-height:380px; }
 
   .couple-names{
     font-size:clamp(34px,11vw,54px);
@@ -818,7 +818,7 @@ textarea.fancy-input{min-height:120px;resize:vertical;line-height:1.6;}
 
 /* ── Very small (360px) ── */
 @media(max-width:360px){
-  #plane-section{ height:72vh; min-height:340px; }
+  #plane-section{ height:100vh; min-height:340px; }
   .couple-names{ font-size:clamp(30px,10vw,46px); }
   .cd-grid{ gap:4px; }
   .cd-num{
